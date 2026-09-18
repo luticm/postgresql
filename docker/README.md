@@ -59,45 +59,28 @@ The example ports are `54316` for pg16, `54317` for pg17, `54318` for pg18, and 
 
 ## Folder details
 
-The Compose examples use bind mounts. The required host folders are:
+The Compose examples use the same folder structure for every container version:
 
 ```text
 postgresql/
 ├── scripts/
 └── docker/
-    ├── pg16/
-    │   └── fs/
-    │       ├── data/
-    │       └── scripts/
-    ├── pg17/
-    │   └── fs/
-    │       ├── data/
-    │       └── scripts/
-    ├── pg18/
-    │   └── fs/
-    │       ├── data/
-    │       └── scripts/
-    └── pg19/
+    └── pg<version>/
         └── fs/
             ├── data/
             └── scripts/
 ```
 
-| Compose directory | Host path | Container path | Purpose |
+Replace `<version>` with `pg16`, `pg17`, `pg18`, or `pg19`. Each container uses the matching `fs/data` and `fs/scripts` folders for its version.
+
+| Host path | Container path | Purpose |
 | --- | --- | --- | --- |
-| `docker/pg16` | `docker/pg16/fs/data` | `/var/lib/postgresql/data` | PostgreSQL 16 data directory |
-| `docker/pg16` | `scripts` | `/home/scripts` | Shared host scripts |
-| `docker/pg16` | `docker/pg16/fs/scripts` | `/home/dockerscripts` | PostgreSQL 16 container scripts |
-| `docker/pg17` | `docker/pg17/fs/data` | `/var/lib/postgresql/data` | PostgreSQL 17 data directory |
-| `docker/pg17` | `scripts` | `/home/scripts` | Shared host scripts |
-| `docker/pg17` | `docker/pg17/fs/scripts` | `/home/dockerscripts` | PostgreSQL 17 container scripts |
-| `docker/pg18` | `docker/pg18/fs/data` | `/var/lib/postgresql/18/docker` | PostgreSQL 18 data directory |
-| `docker/pg18` | `scripts` | `/home/scripts` | Shared host scripts |
-| `docker/pg18` | `docker/pg18/fs/scripts` | `/home/dockerscripts` | PostgreSQL 18 container scripts |
-| `docker/pg19` | `docker/pg19/fs/data` | `/var/lib/postgresql/19/docker` | PostgreSQL 19 data directory |
-| `docker/pg19` | `scripts` | `/home/scripts` | Shared host scripts |
-| `docker/pg19` | `docker/pg19/fs/scripts` | `/home/dockerscripts` | PostgreSQL 19 container scripts |
+| `docker/pg<version>/fs/data` | PostgreSQL data directory | Persisted database files |
+| `scripts` | `/home/scripts` | Shared host scripts |
+| `docker/pg<version>/fs/scripts` | `/home/dockerscripts` | Version-specific container scripts |
 
 Relative paths are resolved from the directory containing each Compose file. The `scripts` mount uses `..\\..\\scripts`, so it points to the repository-level `scripts` directory for every PostgreSQL version.
+
+PostgreSQL 16 and 17 mount the data directory at `/var/lib/postgresql/data`. PostgreSQL 18 and 19 mount it at their version-specific Docker data path.
 
 Keep each PostgreSQL version's `fs/data` directory separate. Do not reuse a data directory between major versions or populate it manually. Add shared scripts to `scripts` and version-specific helper scripts to that version's `fs/scripts` directory.
