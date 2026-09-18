@@ -1,0 +1,14 @@
+services:
+  pgsql:
+    build: .
+    restart: no
+    environment:
+      POSTGRES_USER: your_user
+      POSTGRES_PASSWORD: your_password
+      POSTGRES_DB: postgres
+    ports:
+      - 54319:5432
+    volumes:
+      - .\fs\data:/var/lib/postgresql/19/docker/
+      - ..\..\scripts\:/home/scripts
+      - .\fs\scripts:/home/dockerscripts
