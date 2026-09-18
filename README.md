@@ -1,6 +1,27 @@
-# PostgreSQL Local Environment
+# PostgreSQL Learning Repository
 
-A local PostgreSQL development environment using Docker Compose. It provides isolated examples for PostgreSQL 16, 17, 18, and 19, with version-specific data and script folders.
+This is a personal repository for learning, experimenting with, and exploring PostgreSQL. It starts with a Docker-based local environment and will grow with examples, notes, and exercises covering PostgreSQL features and administration.
+
+## Folder structure
+
+```text
+postgresql/
+├── docker/
+│   ├── pg16/
+│   ├── pg17/
+│   ├── pg18/
+│   ├── pg19/
+│   └── README.md
+├── scripts/
+├── .gitignore
+└── README.md
+```
+
+- `docker/`: PostgreSQL Docker Compose examples for each supported version.
+- `scripts/`: Shared scripts used by the local containers.
+- `README.md`: Repository overview and entry point for future learning topics.
+
+As new PostgreSQL topics, examples, or exercises are added, their folders and purpose will be documented in this section.
 
 ## Prerequisites
 
